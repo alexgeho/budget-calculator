@@ -1,17 +1,64 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fed25d-js-inl-2-budget-app-alexgeho</title>
-  </head>
-  <body>
-    <div id="app"></div>
 
-    <input type="text" id="value">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./src/style.css">
+  <title>fed25d-js-inl-2-budget-app-alexgeho</title>
+</head>
 
-    
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<body>
+  <header>budget calculator</header>
+  <main>
+
+    <section>
+
+      <!-- ROW 1 -->
+      <div class="row costs">
+        <div>Sport</div>
+        <div><Input type="checkbox" id="checkbox"></div>
+        <div class="amount">
+          <Input type="number" id="checkbox">
+          <span>kr</span>
+        </div>
+        <button class="delete-row">delete</button>
+      </div>
+      <!-- ROW 1 END-->
+
+      <!-- ROW 2 -->
+      <div class="row income">
+        <div>Lön</div>
+        <div><Input type="checkbox" id="checkbox"></div>
+        <div class="amount">
+          <Input type="number" id="checkbox">
+          <span>kr</span>
+        </div>
+        <button class="delete-row">delete</button>
+      </div>
+      <!-- ROW 2 END -->
+
+      <!-- ROW 3 -->
+      <div class="row income">
+        <div>Investering</div>
+        <div><Input type="checkbox" id="checkbox"></div>
+
+        <div class="amount">
+          <Input type="number" id="checkbox">
+          <span>kr</span>
+        </div>
+        <button class="delete-row">delete</button>
+      </div>
+      <!-- ROW 3 END -->
+
+
+    </section>
+
+
+  </main>
+  <footer>footer</footer>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
