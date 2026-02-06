@@ -1,27 +1,6 @@
 /* START */
 
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1.5rem;
-  
-  
-}
 
-.costs {
-  color: red;
-}
-
-.income {
-  color: green;
-}
-
-.amount {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
 
 /* START END*/
 /* 

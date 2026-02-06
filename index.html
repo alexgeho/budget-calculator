@@ -1,83 +1,37 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./src/style.css">
-  <title>fed25d-js-inl-2-budget-app-alexgeho</title>
+  <title>Budget App</title>
 </head>
 
 <body>
-  <header>budget calculator</header>
   <main>
-    
-    <div>
-      <input type="text" id="addItem" placeholder="Text här">
-    </div>
-    <button id="read">Read from local storage</button>
-    <button id="write">Write local storage</button>
 
-    <form>
-      <label for="">
-        <span>Text</span>
-        <input type="text">
-      </label>
+    <h1>Budget App</h1>
 
-      <label for="">
-        <span>Belopp</span>
-        <input type="number">
-      </label>
-      <button id="register">Registrera</button>
+    <p id="balance">Balance: 0 kr</p>
+
+    <form id="form">
+      <input type="text" name="text" placeholder="Beskrivning">
+      <input type="number" name="amount" placeholder="Belopp" required>
+
+      <select name="category" id="category" class="category"></select>
+
+      <select name="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+
+      <button>Add</button>
     </form>
 
-    <section>
-
-      <!-- ROW 1 -->
-      <div class="row costs">
-        <div>Sport</div>
-        <div><Input type="checkbox" id="checkbox"></div>
-        <div class="amount">
-          <input type="number" id="checkbox">
-          <span>kr</span>
-        </div>
-        <button class="delete-row">delete</button>
-      </div>
-      <!-- ROW 1 END-->
-
-      <!-- ROW 2 -->
-      <div class="row income">
-        <div>Lön</div>
-        <div><Input type="checkbox" id="checkbox"></div>
-        <div class="amount">
-          <input type="number" id="checkbox">
-          <span>kr</span>
-        </div>
-        <button class="delete-row">delete</button>
-      </div>
-      <!-- ROW 2 END -->
-
-      <!-- ROW 3 -->
-      <div class="row income">
-        <div>Investering</div>
-        <div><Input type="checkbox" id="checkbox"></div>
-
-        <div class="amount">
-          <Input type="number" id="checkbox">
-          <span>kr</span>
-        </div>
-        <button class="delete-row">delete</button>
-      </div>
-      <!-- ROW 3 END -->
-
-
-    </section>
-
+    <ul id="list"></ul>
 
   </main>
-  <footer>footer</footer>
+
   <script type="module" src="/src/main.ts"></script>
 </body>
-
 </html>

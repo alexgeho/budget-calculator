@@ -1,93 +1,76 @@
-// @ts-nocheck
+import categories from './categories.json'
+import './style.scss'
+import { calculateBalance } from './logic'
+import { load, save } from './storage'
 
-import './style.css';
+type Transaction = {
+  id: string
+  text?: string
+  amount: number
+  category?: string
+  type: 'income' | 'expense'
+}
 
-let myData = [];
- 
+// DOM
+const form = document.querySelector('#form') as HTMLFormElement
+const list = document.querySelector('#list') as HTMLUListElement
+const balanceEl = document.querySelector('#balance') as HTMLElement
+const categorySelect = document.querySelector('#category') as HTMLSelectElement
 
-const input = document.querySelector('#addItem')
-const writeBtn = document.querySelector('#write')
-const readBtn = document.querySelector('#read')
+// state
+let transactions: Transaction[] = load()
 
-readBtn?.addEventListener('click', readFromLocalStorage)
+// categories → select
+categories.forEach(cat => {
+  const option = document.createElement('option')
+  option.value = cat
+  option.textContent = cat
+  categorySelect.appendChild(option)
+})
 
-input?.addEventListener('keydown', checkInputConfirm);
+function render() {
+  list.innerHTML = ''
 
-function checkInputConfirm(e) {
+  transactions.forEach(t => {
+    const li = document.createElement('li')
 
-const ENTER_KEYCODE = 13;
+    li.innerHTML = `
+      ${t.text} | ${t.category} | ${t.amount} kr
+      <button>X</button>
+    `
 
-  if (!e.keyCode === ENTER_KEYCODE) {
-    return;
-  } else {
-    console.log('Yeeeei');
-    
+    li.querySelector('button')!.onclick = () => {
+      transactions = transactions.filter(item => item.id !== t.id)
+      save(transactions)
+      render()
+    }
+
+    list.appendChild(li)
+  })
+
+  
+  const balance = calculateBalance(transactions)
+  balanceEl.textContent = `Balance: ${balance} kr`
+  balanceEl.style.color = balance >= 0 ? 'green' : 'red'
+}
+
+form.onsubmit = e => {
+  e.preventDefault()
+
+  const data = new FormData(form)
+
+  const transaction: Transaction = {
+    id: crypto.randomUUID(),
+    text: String(data.get('text')),
+    amount: Number(data.get('amount')),
+    category: String(data.get('category')),
+    type: data.get('type') as 'income' | 'expense'
   }
 
-myData.push(input.value)
-
-console.log(myData);
-
-saveToLocalStorage();
+  transactions.push(transaction)
+  save(transactions)
+  form.reset()
+  render()
 }
 
-function saveToLocalStorage(params:type) {
-  const stringified = JSON.stringify(myData)
-
-localStorage.setItem('mySavedStuff', stringified)  
-console.log('Data saved');
-
-}
-
-
-function readFromLocalStorage() {
-const savedValue = localStorage.getItem('mySavedStuff');
-
-myData = JSON.parse(savedValue);
-
-console.log('myData är nu', myData);
-
-}
-
-
-
-
-
-/* HIDE TAGS */
-
-function toggleTagsHide(hide: boolean) {
-  document.querySelectorAll('form, section, header, footer').forEach(el => {
-    (el as HTMLElement).hidden = hide;
-  });
-}
-
-toggleTagsHide(true);
-
-/* HIDE TAGS */
-
-
-
-
-/* BUTTON SUBMIT */
-const registerBtn = document.querySelector('#register');
-registerBtn.addEventListener('click', registerExpense);
-
-function registerExpense(e) {
-  e.preventDefault();
-
-  console.log('registrera belopp och text i en array');
-
-}
-
-
-
-/* DELETE BUTTON */
-document.addEventListener('click', deleteRow);
-
-function deleteRow(e: Event) {
-  const target = e.target as HTMLElement;
-
-  if (!target.classList.contains('delete-row')) return;
-
-  target.closest('.row').remove();
-}
+render()
