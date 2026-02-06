@@ -74,3 +74,16 @@ form.onsubmit = e => {
 }
 
 render()
+
+
+/* DELETE ALL */
+
+const resetBtn = document.querySelector('#reset') as HTMLButtonElement
+
+resetBtn.onclick = () => {
+  if (!confirm('Vill du ta bort alla transaktioner?')) return
+
+  transactions = []
+  save(transactions)
+  render()
+}

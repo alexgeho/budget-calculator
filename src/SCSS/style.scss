@@ -111,6 +111,22 @@ input[type="number"] {
 }
 
 
+/* DELETE ALL */
+
+#reset {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+#reset:hover {
+  background: #f5f5f5;
+}
+
+
 /* MEDIA 768 PX */
 
 @media (min-width: 768px) {
