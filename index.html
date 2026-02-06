@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./src/style.css">
   <title>Budget App</title>
 </head>
 
@@ -15,17 +15,30 @@
     <p id="balance">Balance: 0 kr</p>
 
     <form id="form">
-      <input type="text" name="text" placeholder="Beskrivning">
-      <input type="number" name="amount" placeholder="Belopp" required>
+      <div class="field">
+        <label>Beskrivning</label>
+        <input type="text" name="text">
+      </div>
 
-      <select name="category" id="category" class="category"></select>
+      <div class="field">
+        <label>Belopp</label>
+        <input type="number" name="amount" required>
+      </div>
 
-      <select name="type">
-        <option value="income">Income</option>
-        <option value="expense">Expense</option>
-      </select>
+      <div class="field">
+        <label>Kategori (valfri)</label>
+        <select name="category" id="category"></select>
+      </div>
 
-      <button>Add</button>
+      <div class="field">
+        <label>Inkomst / Utgift</label>
+        <select name="type">
+          <option value="income">Inkomst</option>
+          <option value="expense">Utgift</option>
+        </select>
+      </div>
+
+      <button class="submit">Lägg till transaktion</button>
     </form>
 
     <ul id="list"></ul>
@@ -34,4 +47,5 @@
 
   <script type="module" src="/src/main.ts"></script>
 </body>
+
 </html>

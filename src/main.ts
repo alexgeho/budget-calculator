@@ -1,5 +1,5 @@
 import categories from './categories.json'
-import './style.scss'
+import './SCSS/style.scss'
 import { calculateBalance } from './logic'
 import { load, save } from './storage'
 
@@ -35,7 +35,7 @@ function render() {
     const li = document.createElement('li')
 
     li.innerHTML = `
-      ${t.text} | ${t.category} | ${t.amount} kr
+      ${t.text} ${t.category} ${t.amount} kr
       <button>X</button>
     `
 

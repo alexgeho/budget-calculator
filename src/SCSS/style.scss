@@ -1,0 +1,143 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-weight: 100;
+    font-size: 1.5rem;
+  }
+}
+
+/* ---------- FORM LAYOUT ---------- */
+
+#form {
+  display: grid;
+  gap: 16px;
+  width: 85%;
+}
+
+/* ---------- FIELD ---------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ---------- LABEL ---------- */
+
+label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* ---------- INPUTS & SELECTS ---------- */
+
+input,
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1.3rem;
+}
+
+/* ---------- BUTTON ---------- */
+
+button.submit {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+button.submit:hover {
+  background: #e5e5e5;
+}
+
+/* ---------- TRANSACTIONS ---------- */
+
+#list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+  font-size: 1.5rem;
+
+  button {
+    font-size: 1.2rem;
+    margin: 20px;
+  }
+}
+
+#list button {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+/* ---------- BALANCE COLORS ---------- */
+
+#balance {
+  font-size: 1.3rem;
+}
+
+.income {
+  color: green;
+}
+
+.costs {
+  color: red;
+}
+
+/* ---------- REMOVE NUMBER ARROWS ---------- */
+
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+/* MEDIA 768 PX */
+
+@media (min-width: 768px) {
+  #form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .field {
+    width: 23%;
+  }
+
+  button.submit {
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  /* ---------- INPUTS & SELECTS ---------- */
+
+input,
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1.1rem;
+}
+}
