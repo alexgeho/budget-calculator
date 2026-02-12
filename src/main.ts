@@ -3,7 +3,7 @@ import './SCSS/style.scss'
 import { calculateBalance } from './logic'
 import { load, save } from './storage'
 
-type Transaction = {
+interface Itransaction {
   id: string
   text?: string
   amount: number
@@ -18,9 +18,9 @@ const balanceEl = document.querySelector('#balance') as HTMLElement
 const categorySelect = document.querySelector('#category') as HTMLSelectElement
 
 // state
-let transactions: Transaction[] = load()
+let transactions: Itransaction[] = load()
 
-// categories → select
+// select categories 
 categories.forEach(cat => {
   const option = document.createElement('option')
   option.value = cat
@@ -37,7 +37,7 @@ function render() {
     li.innerHTML = `
       ${t.text} ${t.category} ${t.amount} kr
       <button>X</button>
-    `
+    ` 
 
     li.querySelector('button')!.onclick = () => {
       transactions = transactions.filter(item => item.id !== t.id)
@@ -59,7 +59,7 @@ form.onsubmit = e => {
 
   const data = new FormData(form)
 
-  const transaction: Transaction = {
+  const transaction: Itransaction = {
     id: crypto.randomUUID(),
     text: String(data.get('text')),
     amount: Number(data.get('amount')),

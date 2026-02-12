@@ -30,13 +30,15 @@
         <select name="category" id="category"></select>
       </div>
 
-      <div class="field">
-        <label>Inkomst / Utgift</label>
-        <select name="type">
-          <option value="income">Inkomst</option>
-          <option value="expense">Utgift</option>
-        </select>
-      </div>
+      <fieldset>
+        <label for=""> Inkomst
+        <input name="type" type="radio" value="income">
+        </label>
+
+         <label for=""> Utgift
+        <input name="type" type="radio" value="expense">
+        </label>
+      </fieldset>
 
       <button class="submit">Lägg till transaktion</button>
     </form>
