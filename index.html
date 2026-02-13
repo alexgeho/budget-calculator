@@ -28,7 +28,7 @@
         </label>
       </fieldset>
 
-      <fieldset class="flex gap-8 items-start" >
+      <fieldset class="flex gap-8 items-start">
         <span class="inline-block w-28">Utgiftstyp</span>
         <label class="gap-1">
           <input type="radio" name="type" value="expense" required>
@@ -42,7 +42,11 @@
       <button class="text-black bg-amber-300 px-4 py-2 cursor-pointer">Registrera</button>
 
     </form>
-
+    <section class="mt-8">
+      <h2 class="text-xl font-bold mb-4">Utgifter</h2>
+      <div id="budgetItemsList"></div>
+      
+    </section>
   </main>
   <script type="module" src="/src/main.ts"></script>
 </body>

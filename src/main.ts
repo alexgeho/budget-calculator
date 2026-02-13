@@ -10,6 +10,8 @@ interface Itransaction {
 }
 
 const form = document.querySelector('form')
+const transactionsContainer = document.querySelector<HTMLDivElement>('#budgetItemsList')
+
 
 form?.addEventListener('submit', saveToStorage)
 
@@ -41,22 +43,25 @@ function saveToStorage(e: SubmitEvent) {
 
 budgetPosters.push(budgetPoster)
 
-if (budgetPosters) {
-  console.log('budgetPosters::::', budgetPosters);
+// descriptionValue.value = '' 
+// amountValue.value = ''
+
+ render()
 
 }
 
+function render () {
+  if (!transactionsContainer) return
+
+  transactionsContainer.innerHTML = ``
+
+  budgetPosters.forEach(post => {
+    const div = document.createElement('div')
+    div.textContent = `${post.descrition} - ${post.amount} (${post.type})`
+    transactionsContainer.appendChild(div)
+  })
+
 }
 
 
-
-
-
-
-
-
-
-// if (descrition) {
-//   descrition.innerHTML = 'Hello brother'
-// }
 
