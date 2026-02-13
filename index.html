@@ -17,25 +17,25 @@
       <fieldset>
         <label for="">
           <span>Beskrivning</span>
-          <input type="text">
+          <input type="text" id="desc">
         </label>
       </fieldset>
 
       <fieldset>
         <label for="">
           <span>Belopp</span>
-          <input type="number">
+          <input type="number" id="amount">
         </label>
       </fieldset>
 
-      <fieldset class="flex gap-8 items-start">
+      <fieldset class="flex gap-8 items-start" >
         <span class="inline-block w-28">Utgiftstyp</span>
         <label class="gap-1">
-          <input type="radio">
+          <input type="radio" name="type" value="expense" required>
           <span>Kostnad</span>
         </label>
         <label class="gap-1">
-          <input type="radio">
+          <input type="radio" name="type" value="income">
           <span>Intäkt</span>
         </label>
       </fieldset>
