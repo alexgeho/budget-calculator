@@ -4,20 +4,20 @@ import './style.css'
 // Data layer
 // Array that stores all transactions in memory
 // ---------------------------
-let budgetPosters: Itransaction[] = []
-
-// Type definition for one transaction object
 interface Itransaction {
-  descrition: string
+  description: string
   amount: number
-  type: 'expence' | 'income'
+  type: 'expense' | 'income'
 }
+
+let budgetPosters: Itransaction[] = []
 
 // ---------------------------
 // DOM references
 // ---------------------------
-const form = document.querySelector('form')
+const form = document.querySelector<HTMLFormElement>('form')
 const transactionsContainer = document.querySelector<HTMLDivElement>('#budgetItemsList')
+const balanceElement = document.querySelector<HTMLDivElement>('#balance')
 
 // Attach submit event to form
 form?.addEventListener('submit', saveToStorage)
@@ -26,41 +26,32 @@ form?.addEventListener('submit', saveToStorage)
 // Handle form submission
 // ---------------------------
 function saveToStorage(e: SubmitEvent) {
-  e.preventDefault() // Prevent page reload
+  e.preventDefault()
 
-  // Get form inputs
-  const description = document.querySelector<HTMLInputElement>('#desc')
-  const amount = document.querySelector<HTMLInputElement>('#amount')
-  const type = document.querySelector<HTMLInputElement>('input[name="type"]:checked')
+  const descriptionInput = document.querySelector<HTMLInputElement>('#desc')
+  const amountInput = document.querySelector<HTMLInputElement>('#amount')
+  const typeInput = document.querySelector<HTMLInputElement>('input[name="type"]:checked')
 
-  // Safety check – ensure elements exist
-  if (!description || !amount || !type) {
-    return
-  }
+  if (!descriptionInput || !amountInput || !typeInput) return
 
-  // Extract and clean input values
-  const descriptionValue = description.value.trim()
-  const amountValue = Number(amount.value)
-  const typeValue = type.value as 'expence' | 'income'
+  const descriptionValue = descriptionInput.value.trim()
+  const amountValue = Number(amountInput.value)
+  const typeValue = typeInput.value as 'expense' | 'income'
 
-  // Validation – prevent empty description or invalid amount
-  if (!descriptionValue || amountValue <= 0) {
-    return
-  }
+  if (!descriptionValue || amountValue <= 0) return
 
-  // Create transaction object
-  const budgetPoster: Itransaction = {
-    descrition: descriptionValue,
+  const transaction: Itransaction = {
+    description: descriptionValue,
     amount: amountValue,
     type: typeValue
   }
 
-  // Add transaction to array
-  budgetPosters.push(budgetPoster)
+  budgetPosters.push(transaction)
 
-  // Re-render UI after data change
   render()
   calculateBalance()
+
+  form?.reset()
 }
 
 // ---------------------------
@@ -69,48 +60,56 @@ function saveToStorage(e: SubmitEvent) {
 function render() {
   if (!transactionsContainer) return
 
-  // Clear existing list
-  transactionsContainer.innerHTML = ``
+  transactionsContainer.innerHTML = ''
 
-  // Loop through array and create DOM elements
-  budgetPosters.forEach(post => {
+  budgetPosters.forEach((post, index) => {
     const div = document.createElement('div')
-    div.textContent = `${post.descrition} - ${post.amount} (${post.type})`
+    div.classList.add('transaction')
+
+    const text = document.createElement('span')
+    text.textContent = `${post.description} - ${post.amount} (${post.type})`
+
+    const btn = document.createElement('button')
+    btn.textContent = 'X'
+    btn.classList.add('text-red-500')
+
+    // Delete logic
+    btn.addEventListener('click', () => {
+      budgetPosters.splice(index, 1)
+      render()
+      calculateBalance()
+    })
+
+    div.appendChild(text)
+    div.appendChild(btn)
+
     transactionsContainer.appendChild(div)
   })
 }
 
-/* CALCULATE */
-
+// ---------------------------
+// Calculate and display balance
+// ---------------------------
 function calculateBalance() {
-
   let balance = 0
 
   budgetPosters.forEach(post => {
-
-
     if (post.type === 'income') {
       balance += post.amount
     } else {
       balance -= post.amount
     }
-    console.log('balance::::', balance);
-  }
-  )
+  })
 
-  /* BALANCE TO DOM */
+  if (!balanceElement) return
 
-  const balanceElement = document.querySelector('#balance')
-  balanceElement.textContent = `Balace: ${balance}`
+  balanceElement.textContent = `Balance: ${balance}`
 
   balanceElement.classList.remove('text-green-500', 'text-red-500')
 
   if (balance > 0) {
     balanceElement.classList.add('text-green-500')
-  } else {
+  } else if (balance < 0) {
     balanceElement.classList.add('text-red-500')
   }
-
 }
-
-console.log('budgetPosters::::', budgetPosters);
