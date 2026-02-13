@@ -84,25 +84,33 @@ function render() {
 
 function calculateBalance() {
 
-  let balanca = 0
+  let balance = 0
 
   budgetPosters.forEach(post => {
 
 
     if (post.type === 'income') {
-      balanca += post.amount
+      balance += post.amount
     } else {
-      balanca -= post.amount
+      balance -= post.amount
     }
-    console.log('balance::::', balanca);
+    console.log('balance::::', balance);
+  }
+  )
 
-    /* BALANCE TO DOM */
+  /* BALANCE TO DOM */
 
-    const balanceElement = document.querySelector('#balance')
-    balanceElement.textContent = `Balace: ${balanca}`
+  const balanceElement = document.querySelector('#balance')
+  balanceElement.textContent = `Balace: ${balance}`
+
+  balanceElement.classList.remove('text-green-500', 'text-red-500')
+
+  if (balance > 0) {
+    balanceElement.classList.add('text-green-500')
+  } else {
+    balanceElement.classList.add('text-red-500')
   }
 
-  )
 }
 
 console.log('budgetPosters::::', budgetPosters);
