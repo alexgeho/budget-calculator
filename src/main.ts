@@ -1,4 +1,5 @@
 import './style.css'
+import categories from './categories.json'
 
 // ---------------------------
 // Data layer
@@ -8,6 +9,8 @@ interface Itransaction {
   description: string
   amount: number
   type: 'expense' | 'income'
+  category: string
+
 }
 
 let budgetPosters: Itransaction[] = []
@@ -31,23 +34,27 @@ function saveToStorage(e: SubmitEvent) {
   const descriptionInput = document.querySelector<HTMLInputElement>('#desc')
   const amountInput = document.querySelector<HTMLInputElement>('#amount')
   const typeInput = document.querySelector<HTMLInputElement>('input[name="type"]:checked')
+  const categorySelect = document.querySelector<HTMLSelectElement>('#category')
 
-  if (!descriptionInput || !amountInput || !typeInput) return
+  if (!descriptionInput || !amountInput || !typeInput || !categorySelect) return
 
   const descriptionValue = descriptionInput.value.trim()
   const amountValue = Number(amountInput.value)
   const typeValue = typeInput.value as 'expense' | 'income'
+  const categoryValue = categorySelect.value
 
   if (!descriptionValue || amountValue <= 0) return
 
   const transaction: Itransaction = {
     description: descriptionValue,
     amount: amountValue,
-    type: typeValue
+    type: typeValue,
+    category: categoryValue
   }
 
   budgetPosters.push(transaction)
 
+  saveToLocalStorage()
   render()
   calculateBalance()
 
@@ -57,34 +64,66 @@ function saveToStorage(e: SubmitEvent) {
 // ---------------------------
 // Render transactions to DOM
 // ---------------------------
-function render() {
+
+// ---------------------------
+// Render transactions to DOM
+// ---------------------------
+function render(): void {
   if (!transactionsContainer) return
 
+  // 1. Clear previous content
   transactionsContainer.innerHTML = ''
 
-  budgetPosters.forEach((post, index) => {
-    const div = document.createElement('div')
-    div.classList.add('transaction')
+  // 2. Loop through all transactions
+  budgetPosters.forEach(createTransactionRow)
+}
 
-    const text = document.createElement('span')
-    text.textContent = `${post.description} - ${post.amount} (${post.type})`
+// ---------------------------
+// Create one transaction row
+// ---------------------------
+function createTransactionRow(post: Itransaction, index: number): void {
+  if (!transactionsContainer) return
 
-    const btn = document.createElement('button')
-    btn.textContent = 'X'
-    btn.classList.add('text-red-500')
+  // 1. Create container div
+  const div = document.createElement('div')
+  div.classList.add('transaction')
 
-    // Delete logic
-    btn.addEventListener('click', () => {
-      budgetPosters.splice(index, 1)
-      render()
-      calculateBalance()
-    })
+  // 2. Create text element
+  const text = document.createElement('span')
+  text.textContent =
+    `${post.description} - ${post.amount} (${post.type}) [${post.category}]`
 
-    div.appendChild(text)
-    div.appendChild(btn)
+  // 3. Create delete button
+  const btn = document.createElement('button')
+  btn.textContent = 'X'
+  btn.classList.add('text-red-500')
 
-    transactionsContainer.appendChild(div)
+  // 4. Attach delete handler
+  btn.addEventListener('click', function handleDeleteClick() {
+    deleteTransaction(index)
   })
+
+  // 5. Append elements to row
+  div.appendChild(text)
+  div.appendChild(btn)
+
+  // 6. Append row to container
+  transactionsContainer.appendChild(div)
+}
+
+// ---------------------------
+// Delete transaction logic
+// ---------------------------
+function deleteTransaction(index: number): void {
+  // 1. Remove item from array
+  budgetPosters.splice(index, 1)
+
+  // 2. Update localStorage
+  saveToLocalStorage()
+
+  // 3. Re-render UI
+  render()
+  calculateBalance()
 }
 
 // ---------------------------
@@ -112,4 +151,40 @@ function calculateBalance() {
   } else if (balance < 0) {
     balanceElement.classList.add('text-red-500')
   }
+}
+
+/* SAVE TO LOCAL STORAGE */
+function saveToLocalStorage() {
+  localStorage.setItem('budget', JSON.stringify(budgetPosters))
+}
+
+/* LOAD FROM LOCAL STORAGE */
+
+function loadFromLocalStorage() {
+  const data = localStorage.getItem('budget')
+
+  if (!data) return
+
+  budgetPosters = JSON.parse(data)
+
+  render()
+  calculateBalance()
+}
+
+loadFromLocalStorage()
+renderCategories()
+
+
+/* RENDER CATEGORIES */
+
+function renderCategories() {
+  const select = document.querySelector<HTMLSelectElement>('#category')
+  if (!select) return
+
+  categories.forEach(cat => {
+    const option = document.createElement('option')
+    option.value = cat
+    option.textContent = cat
+    select.appendChild(option)
+  })
 }

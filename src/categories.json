@@ -1,8 +1,8 @@
 [
-  "",
-  "Salary",
-  "Rent",
-  "Food",
+  "Mat",
+  "Hyra",
   "Transport",
-  "Other"
+  "Nöje",
+  "Lön",
+  "Övrigt"
 ]
