@@ -1,52 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Budget App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 
 <body>
-  <main>
+  <h1 class="text-6xl text-red-600 bg-black p-10">
+  TAILWIND TEST
+</h1>
+  <main class="p-4 max-w-prose mx-auto">
+    <h1 class="text-2xl font-bold mb-8 text-center">Min budgett-app</h1>
 
-    <h1>Budget App</h1>
-
-    <p id="balance">Balance: 0 kr</p>
-
-    <form id="form">
-      <div class="field">
-        <label>Beskrivning</label>
-        <input type="text" name="text">
-      </div>
-
-      <div class="field">
-        <label>Belopp</label>
-        <input type="number" name="amount" required>
-      </div>
-
-      <div class="field">
-        <label>Kategori (valfri)</label>
-        <select name="category" id="category"></select>
-      </div>
+    <form>
 
       <fieldset>
-        <label for=""> Inkomst
-        <input name="type" type="radio" value="income">
-        </label>
-
-         <label for=""> Utgift
-        <input name="type" type="radio" value="expense">
+        <label for="">
+          <span>Beskrivning</span>
+          <input type="text">
         </label>
       </fieldset>
 
-      <button class="submit">Lägg till transaktion</button>
+      <fieldset>
+        <label for="">
+          <span>Belopp</span>
+          <input type="number">
+        </label>
+      </fieldset>
+
+      <fieldset class="flex gap-8 items-start">
+        <span class="inline-block w-28">Utgiftstyp</span>
+        <label class="gap-1">
+          <input type="radio">
+          <span>Kostnad</span>
+        </label>
+        <label class="gap-1">
+          <input type="radio">
+          <span>Intäkt</span>
+        </label>
+      </fieldset>
+      <button class="text-black bg-amber-300 px-4 py-2 cursor-pointer">Registrera</button>
+
     </form>
 
-    <ul id="list"></ul>
-    <button type="button" id="reset">Rensa alla</button>
   </main>
-
   <script type="module" src="/src/main.ts"></script>
 </body>
 
